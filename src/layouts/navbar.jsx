@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { CircleUser, Menu, Package2 } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
+import newsletterIcon from "/images/newsletter-icon.png";
 
 const Layout = () => {
   return (
@@ -23,6 +24,18 @@ const Layout = () => {
       <main className="flex-grow overflow-auto">
         <Outlet />
       </main>
+      <footer className="border-t bg-background p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <span>&copy; 2023 Acme Inc. All rights reserved.</span>
+          <div className="flex space-x-4">
+            <Input placeholder="Your Email" />
+            <Button>
+              <img src={newsletterIcon} alt="Subscribe" className="h-6 w-6 mr-2" />
+              Subscribe
+            </Button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

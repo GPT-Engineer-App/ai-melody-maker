@@ -5,6 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLyrics, fetchMelody } from "@/services/chosic";
 import { Link } from "react-router-dom";
+import shareIcon from "/images/share-icon.png";
+import embedIcon from "/images/embed-icon.png";
+import newsletterIcon from "/images/newsletter-icon.png";
 
 const Index = () => {
   const [theme, setTheme] = useState("");
@@ -110,6 +113,64 @@ const Index = () => {
           value={melody}
           readOnly
         />
+      </div>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Share and Embed this Tool</h2>
+        <div className="flex space-x-4">
+          <Button>
+            <img src={shareIcon} alt="Share" className="h-6 w-6 mr-2" />
+            Share
+          </Button>
+          <Button>
+            <img src={embedIcon} alt="Embed" className="h-6 w-6 mr-2" />
+            Embed
+          </Button>
+        </div>
+        <div className="mt-4">
+          <Textarea
+            placeholder="Embed Code"
+            value={`<iframe src="${window.location.href}" width="600" height="400"></iframe>`}
+            readOnly
+          />
+        </div>
+      </div>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Subscribe to our Newsletter</h2>
+        <div className="flex space-x-4">
+          <Input placeholder="Your Email" />
+          <Button>
+            <img src={newsletterIcon} alt="Subscribe" className="h-6 w-6 mr-2" />
+            Subscribe
+          </Button>
+        </div>
+      </div>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Testimonials</h2>
+        <div className="space-y-4">
+          <div className="p-4 border rounded-md">
+            <p>"This tool has revolutionized my music composition process!" - User A</p>
+          </div>
+          <div className="p-4 border rounded-md">
+            <p>"I can't believe how easy it is to create amazing music with this tool." - User B</p>
+          </div>
+          <div className="p-4 border rounded-md">
+            <p>"A must-have for any music creator!" - User C</p>
+          </div>
+        </div>
+      </div>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Features Overview</h2>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Generate lyrics and melodies based on your input</li>
+          <li>Share and embed your compositions easily</li>
+          <li>Subscribe to our newsletter for updates</li>
+          <li>Read testimonials from satisfied users</li>
+        </ul>
+      </div>
+      <div className="mt-8">
+        <Button className="w-full py-4 text-xl">
+          Get Started Now
+        </Button>
       </div>
     </div>
   );
