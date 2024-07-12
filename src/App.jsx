@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Home, Music, FileText, Settings, Zap } from "lucide-react";
+import { Home, Music, FileText, Settings, Zap, BarChart2 } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/navbar"; // Use the navbar layout
 import Index from "./pages/Index.jsx";
@@ -13,6 +13,7 @@ import Bridge from "./pages/Bridge.jsx";
 import Outro from "./pages/Outro.jsx";
 import Refinement from "./pages/Refinement.jsx";
 import Automation from "./pages/Automation.jsx";
+import Analytics from "./pages/Analytics.jsx";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,11 @@ export const navItems = [
     to: "/automation",
     icon: <Zap className="h-4 w-4" />,
   },
+  {
+    title: "Analytics",
+    to: "/analytics",
+    icon: <BarChart2 className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -81,6 +87,7 @@ const App = () => {
               <Route path="outro" element={<Outro />} />
               <Route path="refinement" element={<Refinement />} />
               <Route path="automation" element={<Automation />} />
+              <Route path="analytics" element={<Analytics />} />
             </Route>
           </Routes>
         </Router>
