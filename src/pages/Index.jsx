@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLyrics, fetchMelody } from "@/services/chosic";
 
 const Index = () => {
   const [theme, setTheme] = useState("");
@@ -10,16 +12,24 @@ const Index = () => {
   const [lyrics, setLyrics] = useState("");
   const [melody, setMelody] = useState("");
 
+  const { data: lyricsData, refetch: refetchLyrics } = useQuery({
+    queryKey: ["lyrics", { theme, genre, targetAudience }],
+    queryFn: () => fetchLyrics({ theme, genre, targetAudience }),
+    enabled: false,
+  });
+
+  const { data: melodyData, refetch: refetchMelody } = useQuery({
+    queryKey: ["melody", { theme, genre, targetAudience }],
+    queryFn: () => fetchMelody({ theme, genre, targetAudience }),
+    enabled: false,
+  });
+
   const handleGenerateLyrics = () => {
-    // Placeholder for API call to generate lyrics
-    console.log("Generating lyrics with:", { theme, genre, targetAudience });
-    setLyrics("Generated lyrics based on the provided theme, genre, and target audience.");
+    refetchLyrics();
   };
 
   const handleGenerateMelody = () => {
-    // Placeholder for API call to generate melody
-    console.log("Generating melody with:", { theme, genre, targetAudience });
-    setMelody("Generated melody based on the provided theme, genre, and target audience.");
+    refetchMelody();
   };
 
   return (
@@ -44,13 +54,13 @@ const Index = () => {
         <Button onClick={handleGenerateLyrics}>Generate Lyrics</Button>
         <Textarea
           placeholder="Generated Lyrics"
-          value={lyrics}
+          value={lyricsData || lyrics}
           readOnly
         />
         <Button onClick={handleGenerateMelody}>Generate Melody</Button>
         <Textarea
           placeholder="Generated Melody"
-          value={melody}
+          value={melodyData || melody}
           readOnly
         />
       </div>
