@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import shareIcon from "/images/share-icon.png";
 import embedIcon from "/images/embed-icon.png";
 import newsletterIcon from "/images/newsletter-icon.png";
+import testimonialUserA from "/images/testimonial-user-a.png";
+import testimonialUserB from "/images/testimonial-user-b.png";
+import testimonialUserC from "/images/testimonial-user-c.png";
 
 const Index = () => {
   const [theme, setTheme] = useState("");
@@ -147,13 +150,16 @@ const Index = () => {
       <div className="mt-8">
         <h2 className="text-2xl font-bold mb-4">Testimonials</h2>
         <div className="space-y-4">
-          <div className="p-4 border rounded-md">
+          <div className="p-4 border rounded-md flex items-center">
+            <img src={testimonialUserA} alt="User A" className="h-10 w-10 rounded-full mr-4" />
             <p>"This tool has revolutionized my music composition process!" - User A</p>
           </div>
-          <div className="p-4 border rounded-md">
+          <div className="p-4 border rounded-md flex items-center">
+            <img src={testimonialUserB} alt="User B" className="h-10 w-10 rounded-full mr-4" />
             <p>"I can't believe how easy it is to create amazing music with this tool." - User B</p>
           </div>
-          <div className="p-4 border rounded-md">
+          <div className="p-4 border rounded-md flex items-center">
+            <img src={testimonialUserC} alt="User C" className="h-10 w-10 rounded-full mr-4" />
             <p>"A must-have for any music creator!" - User C</p>
           </div>
         </div>
