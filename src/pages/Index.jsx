@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,17 +13,29 @@ const Index = () => {
   const [lyrics, setLyrics] = useState("");
   const [melody, setMelody] = useState("");
 
-  const { data: lyricsData, refetch: refetchLyrics } = useQuery({
+  const { data: lyricsData, refetch: refetchLyrics, isLoading: isLoadingLyrics, error: errorLyrics } = useQuery({
     queryKey: ["lyrics", { theme, genre, targetAudience }],
     queryFn: () => fetchLyrics({ theme, genre, targetAudience }),
     enabled: false,
   });
 
-  const { data: melodyData, refetch: refetchMelody } = useQuery({
+  const { data: melodyData, refetch: refetchMelody, isLoading: isLoadingMelody, error: errorMelody } = useQuery({
     queryKey: ["melody", { theme, genre, targetAudience }],
     queryFn: () => fetchMelody({ theme, genre, targetAudience }),
     enabled: false,
   });
+
+  useEffect(() => {
+    if (lyricsData) {
+      setLyrics(lyricsData);
+    }
+  }, [lyricsData]);
+
+  useEffect(() => {
+    if (melodyData) {
+      setMelody(melodyData);
+    }
+  }, [melodyData]);
 
   const handleGenerateLyrics = () => {
     refetchLyrics();
@@ -80,16 +92,22 @@ const Index = () => {
           value={targetAudience}
           onChange={(e) => setTargetAudience(e.target.value)}
         />
-        <Button onClick={handleGenerateLyrics}>Generate Lyrics</Button>
+        <Button onClick={handleGenerateLyrics} disabled={isLoadingLyrics}>
+          {isLoadingLyrics ? "Generating Lyrics..." : "Generate Lyrics"}
+        </Button>
+        {errorLyrics && <p className="text-red-500">{errorLyrics.message}</p>}
         <Textarea
           placeholder="Generated Lyrics"
-          value={lyricsData || lyrics}
+          value={lyrics}
           readOnly
         />
-        <Button onClick={handleGenerateMelody}>Generate Melody</Button>
+        <Button onClick={handleGenerateMelody} disabled={isLoadingMelody}>
+          {isLoadingMelody ? "Generating Melody..." : "Generate Melody"}
+        </Button>
+        {errorMelody && <p className="text-red-500">{errorMelody.message}</p>}
         <Textarea
           placeholder="Generated Melody"
-          value={melodyData || melody}
+          value={melody}
           readOnly
         />
       </div>
