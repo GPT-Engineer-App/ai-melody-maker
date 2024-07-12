@@ -15,6 +15,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  * | name       | text        | string | true     |
  * | created_at | timestamptz | string | true     |
  * | date       | date        | string | true     |
+ * 
+ * ### automations
+ * 
+ * | name           | type        | format | required |
+ * |----------------|-------------|--------|----------|
+ * | id             | int8        | number | true     |
+ * | event_triggers | text        | string | true     |
+ * | actions        | text        | string | true     |
+ * | created_at     | timestamptz | string | true     |
  */
 
 export default supabase;

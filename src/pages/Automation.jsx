@@ -1,14 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import supabase from "@/integrations/supabase";
 
 const Automation = () => {
   const [eventTriggers, setEventTriggers] = useState("");
   const [actions, setActions] = useState("");
 
+  const { mutate: setupAutomation, isLoading, error } = useMutation({
+    mutationFn: async ({ eventTriggers, actions }) => {
+      const { data, error } = await supabase
+        .from("automations")
+        .insert([{ event_triggers: eventTriggers, actions }]);
+      if (error) throw new Error(error.message);
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log("Automation setup successfully:", data);
+    },
+  });
+
   const handleSetupAutomation = () => {
-    // Placeholder for API call to automation platform
-    console.log("Setting up automation with:", { eventTriggers, actions });
+    setupAutomation({ eventTriggers, actions });
   };
 
   return (
@@ -25,7 +39,10 @@ const Automation = () => {
           value={actions}
           onChange={(e) => setActions(e.target.value)}
         />
-        <Button onClick={handleSetupAutomation}>Setup Automation</Button>
+        <Button onClick={handleSetupAutomation} disabled={isLoading}>
+          {isLoading ? "Setting up..." : "Setup Automation"}
+        </Button>
+        {error && <p className="text-red-500">{error.message}</p>}
       </div>
     </div>
   );
